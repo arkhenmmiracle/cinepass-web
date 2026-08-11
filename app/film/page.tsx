@@ -66,7 +66,10 @@ export default function FilmPage() {
 
   const film = useMemo(() => films.find((item) => item.slug === filmSlug) ?? films[0], [filmSlug]);
   const regions = cinema ? Object.keys(cinemaData[cinema]) : [];
-  const theatres: readonly string[] =\n    cinema && region\n      ? cinemaData[cinema][region as keyof typeof cinemaData[Cinema]] ?? []\n      : [];
+  const theatres: readonly string[] =
+    cinema && region
+      ? cinemaData[cinema][region as keyof typeof cinemaData[Cinema]] ?? []
+      : [];
   const ready = Boolean(cinema && region && theatre);
   const studioNumber = theatre ? (theatres.indexOf(theatre) % 5) + 1 : 0;
 
