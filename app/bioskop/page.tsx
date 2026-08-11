@@ -23,7 +23,10 @@ export default function CinemaPage(){
   const [filmSlug,setFilmSlug]=useState(""); const [day,setDay]=useState(days[0].date); const [time,setTime]=useState(""); const [userName,setUserName]=useState(""); const [authOpen,setAuthOpen]=useState(false);
   useEffect(()=>{const timer=window.setTimeout(()=>{const saved=localStorage.getItem("cinepassUser");const pending=localStorage.getItem("cinepassPendingBooking");const requestedCinema=new URLSearchParams(window.location.search).get("cinema");if(saved){try{setUserName(JSON.parse(saved).name||"Member")}catch{setUserName("Member")}}if(requestedCinema==="XXI"||requestedCinema==="CGV"){setCinema(requestedCinema);setRegion("");setTheatre("");setFilmSlug("");setTime("");return}if(pending){try{const item=JSON.parse(pending);if(item.cinema==="XXI"||item.cinema==="CGV")setCinema(item.cinema);if(item.region)setRegion(item.region);if(item.theatre)setTheatre(item.theatre);if(item.filmSlug)setFilmSlug(item.filmSlug);if(item.day)setDay(item.day);if(item.time)setTime(item.time)}catch{localStorage.removeItem("cinepassPendingBooking")}}},0);return()=>clearTimeout(timer)},[]);
   const regions=cinema?Object.keys(locations[cinema]):[];
-  const theatres: readonly string[] =\n    cinema && region\n      ? locations[cinema][region as keyof typeof locations[Cinema]] ?? []\n      : [];
+  const theatres: readonly string[] =
+    cinema && region
+      ? locations[cinema][region as keyof typeof locations[Cinema]] ?? []
+      : [];
   const film=useMemo(()=>films.find(item=>item.slug===filmSlug),[filmSlug]);
   const studio=film?films.findIndex(item=>item.slug===filmSlug)%4+1:0;
   const summary:BookingSummary={film:film?.title||"",filmSlug,cinema,region,theatre,studio,day,time,image:film?.image};
